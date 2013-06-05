@@ -61,4 +61,28 @@ public class Server {
     public int getPort (){
         return this.port;
     }
+    
+    /**
+     * Set the nickname of the bot for this server
+     * @param nickname 
+     */
+    public void setNickname (String nickname){
+        this.nickname = nickname;
+    }
+    
+    /**
+     * 
+     * @return Nickname
+     */
+    public String getNickname (){
+        return this.nickname;
+    }
+    
+    /**
+     * Sets the password of the bot for this server
+     * @param password 
+     */
+    public void setPassword (String password){
+        this.password = password;
+    }
 }
