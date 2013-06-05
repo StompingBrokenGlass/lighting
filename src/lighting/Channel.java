@@ -28,17 +28,34 @@ public class Channel {
     }
     
     /** 
-     * 
-     * @return the channel name
+     * Gets the channel name
+     * @return String
      */
     public String getName () {
         return name;
     }
     
+    /**
+     * Adds a user to the channel list
+     * @param user User
+     */
     public void addUser (User user){
         this.users.put(user.getName(), user);
     }
     
+    /**
+     * Adds a user to the channel list
+     * @param username String
+     */
+    public void addUser (String username){
+        this.users.put(username, new User(username));
+    }
+    
+    /**
+     * Gets a user using his username
+     * @param username
+     * @return User
+     */
     public User getUser (String username){
         User user = (User)this.users.get(username);
         return user;
