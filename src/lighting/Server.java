@@ -10,8 +10,25 @@ package lighting;
  * @since 2013-06-05
  */
 public class Server {
-    private String hostname = "localhost";
-    private int port = 6667;
+    private String hostname ;
+    private int port ;
+    private String nickname ;
+    private String password ;
+    
+    Server () {
+        // uses the local server
+        hostname = "localhost";
+        port = 6667;
+        nickname = "lighting";
+        password = "";
+    }
+    
+    Server (String hostname, int port, String nickname, String password){
+        this.hostname = hostname;
+        this.port = port;
+        this.nickname = nickname;
+        this.password = password;
+    }
     
     /**
      * 
