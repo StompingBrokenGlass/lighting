@@ -172,22 +172,51 @@ public class Server extends Thread {
      */
     private void msgProcessor (String message){
         
-        // Check if there is a prefex
+        String prefix = " ";
+        String command = " ";
+        String parameters = " ";
+        
+        // Check if there is a prefex and sets it
         if (message.indexOf(':') == 0){
-            System.out.println("Prefix found");
+            // Finding Spaces
+            int firstSpace = message.indexOf(" ");
+            int secondSpace = message.indexOf(" ", firstSpace+1);
+            //
+            prefix = message.substring(1, firstSpace);
+            command = message.substring(firstSpace +1, secondSpace);
+            parameters = message.substring(secondSpace+1);
+        }else{
+            // no pefix
+            int firstSpace = message.indexOf(" ");
             
-        } else {
-            // Direct command
-            System.out.println("Direct command");
-            
+            command = message.substring(0, firstSpace);
+            parameters = message.substring(firstSpace+1);
+        }
+        
+        // Check up the progress
+        
+        System.out.println("Prefix: " + prefix +" Command: " + command + 
+                " Para:"+ parameters);
+        
+        // switch board of commands
+        switch(command){
+            case "PING" :
+                            this.sendPong(parameters);
+                            break;
+            default:
         }
         
     }
     
     
+    /**
+     * Sends a message through the stream
+     * @param message The message to be sent to the server
+     */
     private void sendMsg (String message) {
         
         try {
+            System.out.println("--> " + message);
             this.outbound.write(message);
             this.outbound.newLine();
             this.outbound.flush();
