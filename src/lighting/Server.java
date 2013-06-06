@@ -4,8 +4,11 @@
  */
 package lighting;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 /**
@@ -22,14 +25,14 @@ public class Server extends Thread {
     
     /* Connection stream */
     private Socket socket;
-    private DataOutputStream outbound;
-    private DataInputStream inbound;
+    private BufferedWriter outbound;
+    private BufferedReader inbound;
     
     Server () {
         // uses the local server
         hostname = "localhost";
         port = 6667;
-        nickname = "lighting";
+        nickname = "Lighting";
         password = "";
     }
     
@@ -73,7 +76,7 @@ public class Server extends Thread {
     }
     
     /**
-     * Set the nickname of the bot for this server
+     * Set the nickname of the bot for DataOutputStreamthis server
      * @param nickname 
      */
     public void setNickname (String nickname){
@@ -98,7 +101,7 @@ public class Server extends Thread {
     
     public void initConnection (){
         
-        System.out.println("Connecting to" + this.hostname + "on port " +
+        System.out.println("Connecting to " + this.hostname + " on port " +
                 this.port + " ...");
         try {
             
@@ -107,8 +110,18 @@ public class Server extends Thread {
             
             // Getting streams
             
-            this.outbound = new DataOutputStream(this.socket.getOutputStream());
-            this.inbound = new DataInputStream(this.socket.getInputStream());
+            this.outbound = new BufferedWriter( new OutputStreamWriter(
+                    this.socket.getOutputStream()));
+            this.inbound = new BufferedReader( new InputStreamReader(
+                    this.socket.getInputStream()));
+            
+            // Identifying our self to the server
+            this.outbound.write("NICK " + this.nickname);
+            this.outbound.newLine();
+            this.outbound.write("USER " + this.nickname +
+                    " 0 * :Lighting Cat-bot");
+            this.outbound.newLine();
+            this.outbound.flush();
             
         } catch (Exception e){
             e.printStackTrace();
@@ -121,5 +134,27 @@ public class Server extends Thread {
      */
     public void run () {
         this.initConnection();
+        try {
+            
+            String lines;
+            boolean running = true;
+            
+            while(running){
+
+                lines = this.inbound.readLine();
+                if (lines != null){
+                    System.out.println(lines);
+                }else{
+                    System.out.println("Disconnected from " + this.hostname + 
+                            ":" + port);
+                    running = false;
+                }
+
+            }
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
 }
