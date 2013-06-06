@@ -4,16 +4,26 @@
  */
 package lighting;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
+
 /**
  *
  * @author StompingBrokenGlass <stompingbrokenglass@gmail.com>
  * @since 2013-06-05
  */
-public class Server {
+public class Server extends Thread {
+    /* Connection configration */
     private String hostname ;
     private int port ;
     private String nickname ;
     private String password ;
+    
+    /* Connection stream */
+    private Socket socket;
+    private DataOutputStream outbound;
+    private DataInputStream inbound;
     
     Server () {
         // uses the local server
@@ -84,5 +94,32 @@ public class Server {
      */
     public void setPassword (String password){
         this.password = password;
+    }
+    
+    public void initConnection (){
+        
+        System.out.println("Connecting to" + this.hostname + "on port " +
+                this.port + " ...");
+        try {
+            
+            this.socket = new Socket(this.hostname,this.port);
+            System.out.println("Connected.");
+            
+            // Getting streams
+            
+            this.outbound = new DataOutputStream(this.socket.getOutputStream());
+            this.inbound = new DataInputStream(this.socket.getInputStream());
+            
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        
+    }
+    
+    /**
+     * Implementing run from Thread Class
+     */
+    public void run () {
+        this.initConnection();
     }
 }
