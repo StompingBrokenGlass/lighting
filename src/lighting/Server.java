@@ -195,11 +195,16 @@ public class Server extends Thread {
         
         // Check up the progress
         
-        System.out.println("Prefix: " + prefix +" Command: " + command + 
-                " Para:"+ parameters);
+        /*System.out.println("Prefix: " + prefix +" Command: " + command + 
+                " Para:"+ parameters);*/
         
         // switch board of commands
         switch(command){
+            
+            case "ERROR" :
+                            System.out.println("Error from the server("+ 
+                                    parameters +")");
+                            break;
             case "PING" :
                             this.sendPong(parameters);
                             break;
