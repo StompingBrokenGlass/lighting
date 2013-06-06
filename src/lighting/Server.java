@@ -28,6 +28,9 @@ public class Server extends Thread {
     private BufferedWriter outbound;
     private BufferedReader inbound;
     
+    /*this Process status */
+    private boolean running = true;
+    
     Server () {
         // uses the local server
         hostname = "localhost";
@@ -136,18 +139,23 @@ public class Server extends Thread {
         this.initConnection();
         try {
             
-            String lines;
-            boolean running = true;
+            String message;
             
-            while(running){
+            while(this.running){
 
-                lines = this.inbound.readLine();
-                if (lines != null){
-                    System.out.println(lines);
+                message = this.inbound.readLine();
+                // checking if the buffer is not null
+                if (message != null){
+                    // Printing inboud messages
+                    System.out.println("<-- " + message);
+                    
+                    // Sending the message to the processor
+                    this.msgProcessor(message);
+                    
                 }else{
                     System.out.println("Disconnected from " + this.hostname + 
                             ":" + port);
-                    running = false;
+                    this.running = false;
                 }
 
             }
@@ -156,5 +164,45 @@ public class Server extends Thread {
             e.printStackTrace();
         }
         
+    }
+    
+    /**
+     * Processor for inbound messages
+     * @param message Received message to be processed
+     */
+    private void msgProcessor (String message){
+        
+        // Check if there is a prefex
+        if (message.indexOf(':') == 0){
+            System.out.println("Prefix found");
+            
+        } else {
+            // Direct command
+            System.out.println("Direct command");
+            
+        }
+        
+    }
+    
+    
+    private void sendMsg (String message) {
+        
+        try {
+            this.outbound.write(message);
+            this.outbound.newLine();
+            this.outbound.flush();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+            
+    }
+    
+    /**
+     * Sends a PONG Message for keeping the connection alive
+     * @param requester Server name from the ping
+     */
+    private void sendPong (String requester){
+        String message = "PONG " + requester;
+        sendMsg (message);
     }
 }
