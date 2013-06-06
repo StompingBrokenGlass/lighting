@@ -18,6 +18,7 @@ public class Lighting {
         // TODO code application logic here
         
         Server server = new Server();
+        server.addChannel("#test");
         server.start();
     }
 }

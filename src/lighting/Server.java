@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
@@ -28,8 +31,11 @@ public class Server extends Thread {
     private BufferedWriter outbound;
     private BufferedReader inbound;
     
-    /*this Process status */
-    private boolean running = true;
+    /* This Process status */
+    private boolean running = false;
+    
+    /* Channels */
+    private HashMap channels = new HashMap();
     
     Server () {
         // uses the local server
@@ -136,6 +142,9 @@ public class Server extends Thread {
      * Implementing run from Thread Class
      */
     public void run () {
+        
+        this.running = true;
+        
         this.initConnection();
         try {
             
@@ -198,8 +207,21 @@ public class Server extends Thread {
         /*System.out.println("Prefix: " + prefix +" Command: " + command + 
                 " Para:"+ parameters);*/
         
-        // switch board of commands
+        // switch board of commands & replies
         switch(command){
+            /* Replies */
+            
+            case "376" :    // End of motd
+                            this.joinChannels();
+                            break;
+                
+            case "366" :    // Greet after Name List
+                            int space = parameters.indexOf(" ");
+                            String chan = parameters.substring(space+1,
+                                    parameters.indexOf(" ", space +1));
+                            this.sendMessage(chan, "Meow!");
+                            break;
+            /* Comands */
             
             case "ERROR" :
                             System.out.println("Error from the server("+ 
@@ -207,6 +229,10 @@ public class Server extends Thread {
                             break;
             case "PING" :
                             this.sendPong(parameters);
+                            break;
+                
+            case "PRIVMSG" :    // Receiving a message
+                            this.echoMessage(message);
                             break;
             default:
         }
@@ -218,7 +244,7 @@ public class Server extends Thread {
      * Sends a message through the stream
      * @param message The message to be sent to the server
      */
-    private void sendMsg (String message) {
+    private void sendRaw (String message) {
         
         try {
             System.out.println("--> " + message);
@@ -237,6 +263,42 @@ public class Server extends Thread {
      */
     private void sendPong (String requester){
         String message = "PONG " + requester;
-        sendMsg (message);
+        sendRaw (message);
+    }
+    
+    public void addChannel (String channel){
+        Channel chan = new Channel();
+        chan.setName(channel);
+        this.channels.put(channel, chan);
+    }
+    
+    public void removeChannel (String channel){
+        this.channels.remove(channel);
+    }
+    
+    private void joinChannels(){
+      Iterator it  = this.channels.entrySet().iterator();
+      
+      while(it.hasNext()){
+          Map.Entry pairs = (Map.Entry) it.next();
+          String chanName = (String) pairs.getKey();
+          this.joinChannel(chanName);
+          it.remove();
+      }
+    }
+    
+    private void joinChannel(String channel){
+        this.sendRaw("JOIN " + channel);
+    }
+    
+    public void sendMessage (String traget, String Message){
+        this.sendRaw("PRIVMSG "+ traget + " :" + Message);
+    }
+    
+    private void echoMessage (String received){
+        int space = received.indexOf(" ");
+        String sender = received.substring(0,space);
+        String message = received.substring(received.indexOf(":")+1);
+        this.sendMessage(sender,message);
     }
 }
