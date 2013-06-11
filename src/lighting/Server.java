@@ -295,10 +295,28 @@ public class Server extends Thread {
         this.sendRaw("PRIVMSG "+ traget + " :" + Message);
     }
     
-    private void echoMessage (String received){
-        int space = received.indexOf(" ");
-        String sender = received.substring(0,space);
-        String message = received.substring(received.indexOf(":")+1);
-        this.sendMessage(sender,message);
+    private void echoMessage (String message){
+        
+        //:binarystroke!~binarystr@localhost.WAG160N PRIVMSG Lighting :test
+                
+        //:binarystroke!~binarystr@localhost.WAG160N PRIVMSG #test :HI
+        
+        int firstSpace = message.indexOf(" ");
+        int secondSpace = message.indexOf(" ", firstSpace+1);
+        int thirdSpace = message.indexOf(" ", secondSpace+1);
+        
+        String sender = message.substring(1,message.indexOf('!'));
+        
+        String channel = message.substring(secondSpace+1,thirdSpace);
+        
+        String received = message.substring(thirdSpace+2);
+        
+        if (channel.equalsIgnoreCase(this.nickname)){
+            // Private message
+            this.sendMessage(sender,received);
+        }else{
+            this.sendMessage(channel,received);
+        }
+        
     }
 }
