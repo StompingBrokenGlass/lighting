@@ -207,27 +207,103 @@ public class Server extends Thread {
         /*System.out.println("Prefix: " + prefix +" Command: " + command + 
                 " Para:"+ parameters);*/
         
-        // switch board of commands & replies
+        // switch board of commands & replies according to IRC rfc2812
         switch(command){
+            
             /* Replies */
+            
+            case "001" :    // RPL_WELCOME
+            case "002" :    // RPL_YOURHOST
+            case "003" :    // RPL_CREATED
+            case "004" :    // RPL_MYINFO
                 
-            case "366" :    // Greet after Name List
+                            // Welcome messages, no action needed
+                            break;
+                
+            case "005" :    // RPL_BOUNCE
+                            /* from rfc2812 it's sent to indicate that
+                            * the server is full and gives aa new address to
+                            * try. 
+                            * But IRCD2 is Sending it's rules on 
+                            * this reply mesage.
+                            */
+                
+                            // TODO: Handle bouncing, and IRCD2 rules
+                            break;
+                
+            case "020" :    // Not in rfc2812 or rfc1459
+                            /* IRCD2 is informing us to wait for connection
+                             * processing.
+                             */
+                             
+                             // TODO: investgate reply 020 more
+                             break;
+                
+            case "042" :    // Not in rfc2812 or rfc1459
+                            /* IRCD2 is sending an unique ID*/
+                
+                            // TODO: invesgate reply 042 more
+                            break;
+                
+            case "251" :    // RPL_LUSERCLIENT
+            case "252" :    // RPL_LUSEROP
+            case "253" :    // RPL_LUSERUNKNOWN
+            case "254" :    // RPL_LUSERCHANNELS
+            case "255" :    // RPL_LUSERME
+                
+                            // Network statictics 
+                            break;
+            case "265" :
+            case "266" :
+                            // Not in rfc2812 or rfc1459
+                            /* IRCD2 sends locally connected stats for 265,
+                             * and network stats for 266
+                             */
+                
+                            // TODO: invesgate replies 265, and 266 more
+                            break;
+                
+            case "353" :    // RPL_NAMREPLY
+                
+                            // TODO: Add users to the channel's userlist
+                            break;
+                
+            case "366" :    // RPL_ENDOFNAMES
+                            // Greet after Name List
                             int space = parameters.indexOf(" ");
                             String chan = parameters.substring(space+1,
                                     parameters.indexOf(" ", space +1));
                             this.sendMessage(chan, "Meow!");
                             break;
                 
-            case "376" :    // End of motd
+            case "372" :    // RPL_MOTD
+                            // Message of the day context
+                            break;
+                
+            case "375" :    // RPL_MOTDSTART
+                            // indcate starting of message of the day
+                            break;
+                
+            case "376" :    // RPL_ENDOFMOTD
+                            // End of message of the day
                             this.joinChannels();
                             break;
             /* Comands */
             
-            case "ERROR" :
+            case "ERROR" :  // Error message from the server
                             System.out.println("Error from the server("+ 
                                     parameters +")");
                             break;
-            case "PING" :
+                
+            case "JOIN" :   // User have joinned the channel
+                            // TODO: add user to list, and maybe greet
+                            break;
+            
+            case "PART" :   // User have left the channel
+                            // TODO: remove user from channel
+                            break;
+                            
+            case "PING" :   
                             this.sendPong(parameters);
                             break;
                 
@@ -235,8 +311,13 @@ public class Server extends Thread {
                             this.echoMessage(message);
                             break;
                 
+            case "QUIT" :   // User have left the network
+                            // TODO: remove user from channel
+                
+                            break;
+                
             default:        // unhandled replies and command
-                            System.out.println ("Unhandled command");
+                            System.out.println ("Unhandled command or reply");
         }
         
     }
