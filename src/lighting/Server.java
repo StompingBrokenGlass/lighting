@@ -210,16 +210,16 @@ public class Server extends Thread {
         // switch board of commands & replies
         switch(command){
             /* Replies */
-            
-            case "376" :    // End of motd
-                            this.joinChannels();
-                            break;
                 
             case "366" :    // Greet after Name List
                             int space = parameters.indexOf(" ");
                             String chan = parameters.substring(space+1,
                                     parameters.indexOf(" ", space +1));
                             this.sendMessage(chan, "Meow!");
+                            break;
+                
+            case "376" :    // End of motd
+                            this.joinChannels();
                             break;
             /* Comands */
             
