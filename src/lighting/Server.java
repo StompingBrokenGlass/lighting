@@ -288,6 +288,20 @@ public class Server extends Thread {
                             // End of message of the day
                             this.joinChannels();
                             break;
+                
+            case "433" :    // ERR_NICKNAMEINUSE
+                            // Nickname is in use
+                
+                            // TODO: handle changing to another nickname
+                            break;
+                
+            case "474" :    // ERR_BANNEDFROMCHAN
+                            // Banned from channel
+                
+                            // TODO: handle bannig from channel
+                
+                            break;
+                
             /* Comands */
             
             case "ERROR" :  // Error message from the server
@@ -299,8 +313,12 @@ public class Server extends Thread {
                             // TODO: add user to list, and maybe greet
                             break;
             
+            case "KICK" :   // User have been kicked
+                            // TODO: remove user from channel's user list
+                            break;
+                
             case "PART" :   // User have left the channel
-                            // TODO: remove user from channel
+                            // TODO: remove user from channel's user list
                             break;
                             
             case "PING" :   
@@ -311,8 +329,12 @@ public class Server extends Thread {
                             this.echoMessage(message);
                             break;
                 
+            case "MODE" :   // Mode changes
+                            
+                            break;
+                
             case "QUIT" :   // User have left the network
-                            // TODO: remove user from channel
+                            // TODO: remove user from channel's user list
                 
                             break;
                 
