@@ -234,7 +234,9 @@ public class Server extends Thread {
             case "PRIVMSG" :    // Receiving a message
                             this.echoMessage(message);
                             break;
-            default:
+                
+            default:        // unhandled replies and command
+                            System.out.println ("Unhandled command");
         }
         
     }
@@ -254,7 +256,6 @@ public class Server extends Thread {
         } catch (IOException e){
             e.printStackTrace();
         }
-            
     }
     
     /**
@@ -295,27 +296,17 @@ public class Server extends Thread {
         this.sendRaw("PRIVMSG "+ traget + " :" + Message);
     }
     
-    private void echoMessage (String message){
+    private void echoMessage (String rawMessage){
         
-        //:binarystroke!~binarystr@localhost.WAG160N PRIVMSG Lighting :test
-                
-        //:binarystroke!~binarystr@localhost.WAG160N PRIVMSG #test :HI
+       Message message = new Message(rawMessage,this.nickname);
         
-        int firstSpace = message.indexOf(" ");
-        int secondSpace = message.indexOf(" ", firstSpace+1);
-        int thirdSpace = message.indexOf(" ", secondSpace+1);
-        
-        String sender = message.substring(1,message.indexOf('!'));
-        
-        String channel = message.substring(secondSpace+1,thirdSpace);
-        
-        String received = message.substring(thirdSpace+2);
-        
-        if (channel.equalsIgnoreCase(this.nickname)){
-            // Private message
-            this.sendMessage(sender,received);
+        if (message.isPM()){
+
+            this.sendMessage(message.getSender(),message.getContext());
         }else{
-            this.sendMessage(channel,received);
+            
+            this.sendMessage(message.getChannel(),message.getContext());
+            
         }
         
     }
