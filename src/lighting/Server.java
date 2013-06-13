@@ -159,7 +159,7 @@ public class Server extends Thread {
                     System.out.println("<-- " + message);
                     
                     // Sending the message to the processor
-                    this.msgProcessor(message);
+                    this.ircProcessor(message);
                     
                 }else{
                     System.out.println("Disconnected from " + this.hostname + 
@@ -179,7 +179,7 @@ public class Server extends Thread {
      * Processor for inbound messages
      * @param message Received message to be processed
      */
-    private void msgProcessor (String message){
+    private void ircProcessor (String message){
         
         String prefix = " ";
         String command = " ";
