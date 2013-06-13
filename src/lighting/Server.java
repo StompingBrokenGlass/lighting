@@ -141,6 +141,7 @@ public class Server extends Thread {
     /**
      * Implementing run from Thread Class
      */
+    @Override
     public void run () {
         
         this.running = true;
@@ -182,8 +183,8 @@ public class Server extends Thread {
     private void ircProcessor (String message){
         
         String prefix = " ";
-        String command = " ";
-        String parameters = " ";
+        String command ;
+        String parameters ;
         
         // Check if there is a prefex and sets it
         if (message.indexOf(':') == 0){

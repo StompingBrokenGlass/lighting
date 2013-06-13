@@ -23,7 +23,7 @@ public class Message {
         this.parseMessage(message);
     }
     
-    public void parseMessage (String message){
+    private void parseMessage (String message){
         
          //:stomp!~stomp@localhost.WAG160N PRIVMSG Lighting :test
                 
