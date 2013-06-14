@@ -414,21 +414,6 @@ public class Server extends Thread {
         this.sendRaw("NOTICE " + traget + " :" + message);
     }
     
-    private void echoMessage (String rawMessage){
-        
-       Message message = new Message(rawMessage,this.nickname);
-        
-        if (message.isPM()){
-
-            this.sendMessage(message.getSender(),message.getContext());
-        }else{
-            
-            this.sendMessage(message.getChannel(),message.getContext());
-            
-        }
-        
-    }
-    
     private void priMsgProcessor (String rawMessage){
         
         Message message = new Message(rawMessage, this.nickname);
