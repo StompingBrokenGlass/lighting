@@ -401,8 +401,12 @@ public class Server extends Thread {
         this.sendRaw("JOIN " + channel);
     }
     
-    public void sendMessage (String traget, String Message){
-        this.sendRaw("PRIVMSG "+ traget + " :" + Message);
+    public void sendMessage (String traget, String message){
+        this.sendRaw("PRIVMSG "+ traget + " :" + message);
+    }
+    
+    public void sendNotice (String traget, String message){
+        this.sendRaw ("NOTICE " + traget + " :" + message);
     }
     
     private void echoMessage (String rawMessage){
