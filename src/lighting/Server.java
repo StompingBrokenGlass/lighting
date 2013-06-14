@@ -332,7 +332,7 @@ public class Server extends Thread {
                             break;
                 
             case "PRIVMSG" :    // Receiving a message
-                            this.echoMessage(message);
+                            this.priMsgProcessor(message);
                             break;
                 
             case "MODE" :   // Mode changes
@@ -449,8 +449,16 @@ public class Server extends Thread {
             // handing commands
             int space = context.indexOf(" ");
             
-            String botCommand = context.substring(1,space);
-            String botParameters = context.substring(space);
+            String botCommand;
+            String botParameters = " ";
+            
+            if (space > 2){
+                botCommand = context.substring(1,space);
+                botParameters = context.substring(space+1);
+            } else {
+                botCommand = context.substring(1);
+            }
+            
             
             switch(botCommand){
                 case "echo" : // echo
