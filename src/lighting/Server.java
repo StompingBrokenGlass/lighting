@@ -25,7 +25,7 @@ public class Server extends Thread {
     private int port ;
     private String nickname ;
     private String password ;
-    private char commandChar ;
+    private String commandChar ;
     
     /* Connection stream */
     private Socket socket;
@@ -44,12 +44,12 @@ public class Server extends Thread {
         this.port = 6667;
         this.nickname = "Lighting";
         this.password = "";
-        this.commandChar = '~';
+        this.commandChar = "~";
         
     }
     
     Server (String hostname, int port, String nickname, String password,
-            char commandChar){
+            String commandChar){
         this.hostname = hostname;
         this.port = port;
         this.nickname = nickname;
@@ -427,5 +427,49 @@ public class Server extends Thread {
             
         }
         
+    }
+    
+    private void priMsgProcessor (String rawMessage){
+        
+        Message message = new Message(rawMessage, this.nickname);
+        
+        String context = message.getContext();
+        
+        String response ="";
+        String traget = "";
+        
+        if (message.isPM()){
+            traget = message.getSender();
+        } else {
+            traget = message.getChannel();
+            response = message.getSender() + ": ";
+        }
+        
+        if (context.startsWith(this.commandChar)) {
+            // handing commands
+            int space = context.indexOf(" ");
+            
+            String botCommand = context.substring(1,space);
+            String botParameters = context.substring(space);
+            
+            switch(botCommand){
+                case "echo" : // echo
+                                response = response.concat(botParameters);
+                                break;
+                default:
+                                response = response.concat("Meow ?");
+                                
+            }
+            
+            this.sendMessage(traget, response);
+            
+        } else if (context.startsWith("CTCP")){
+            // TODO: CTCP support
+        } else {
+            /* do nothing at the moment, but can impletemt some sort of
+             * a listener 
+             * 
+             */
+        }
     }
 }
