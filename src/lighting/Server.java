@@ -334,6 +334,11 @@ public class Server extends Thread {
                             
                             break;
                 
+            case "NOTICE" : // Receiving a notice
+                
+                            // TODO: handle notice
+                            break;
+                
             case "QUIT" :   // User have left the network
                             // TODO: remove user from channel's user list
                 
