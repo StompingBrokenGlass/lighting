@@ -52,18 +52,23 @@ public class Message {
     }
     
     public boolean isPM () {
-        return privateMessage;
+        return this.privateMessage;
     }
     
     public String getContext () {
-        return context;
+        return this.context;
     }
     
     public String getSender () {
-        return sender;
+        return this.sender;
     }
     
     public String getChannel () {
-        return channel;
+        return this.channel;
+    }
+    
+    @Override
+    public String toString() {
+        return this.rawMessage;
     }
 }
