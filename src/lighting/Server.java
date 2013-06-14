@@ -373,7 +373,7 @@ public class Server extends Thread {
      */
     private void sendPong (String requester){
         String message = "PONG " + requester;
-        sendRaw (message);
+        sendRaw(message);
     }
     
     public void addChannel (String channel){
@@ -406,7 +406,7 @@ public class Server extends Thread {
     }
     
     public void sendNotice (String traget, String message){
-        this.sendRaw ("NOTICE " + traget + " :" + message);
+        this.sendRaw("NOTICE " + traget + " :" + message);
     }
     
     private void echoMessage (String rawMessage){
