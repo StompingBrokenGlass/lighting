@@ -25,6 +25,7 @@ public class Server extends Thread {
     private int port ;
     private String nickname ;
     private String password ;
+    private char commandChar ;
     
     /* Connection stream */
     private Socket socket;
@@ -39,17 +40,21 @@ public class Server extends Thread {
     
     Server () {
         // uses the local server
-        hostname = "localhost";
-        port = 6667;
-        nickname = "Lighting";
-        password = "";
+        this.hostname = "localhost";
+        this.port = 6667;
+        this.nickname = "Lighting";
+        this.password = "";
+        this.commandChar = '~';
+        
     }
     
-    Server (String hostname, int port, String nickname, String password){
+    Server (String hostname, int port, String nickname, String password,
+            char commandChar){
         this.hostname = hostname;
         this.port = port;
         this.nickname = nickname;
         this.password = password;
+        this.commandChar = commandChar;
     }
     
     /**
