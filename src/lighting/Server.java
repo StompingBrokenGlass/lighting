@@ -221,15 +221,15 @@ public class Server extends Thread {
                             // Welcome messages, no action needed
                             break;
                 
-            case "005" :    // RPL_BOUNCE
+            case "005" :    // RPL_BOUNCE /  RPL_ISUPPORT
                             /* from rfc2812 it's sent to indicate that
                             * the server is full and gives aa new address to
                             * try. 
-                            * But IRCD2 is Sending it's rules on 
-                            * this reply mesage.
+                            * But IRCD2 uses RPL_ISUPPORT according to 
+                            * IRC RPL_ISUPPORT Numeric Definition draft
                             */
                 
-                            // TODO: Handle bouncing, and IRCD2 rules
+                            // TODO: Handle bouncing, and ISUPPORT
                             break;
                 
             case "020" :    // Not in rfc2812 or rfc1459
