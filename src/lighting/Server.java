@@ -414,6 +414,19 @@ public class Server extends Thread {
         this.sendRaw("NOTICE " + traget + " :" + message);
     }
     
+    public void sendAction (String traget, String message){
+        this.sendRaw("PRIVMSG "+ traget + " :\u0001ACTION" + message 
+                + "\u0001");
+    }
+    
+    public void sendCTCPRequest (String traget, String message){
+        this.sendRaw("PRIVMSG "+ traget + " :\u0001" + message + "\u0001");
+    }
+    
+    public void sendCTCPResponse (String traget, String message){
+        this.sendRaw("NOTICE " + traget + " :\u0001" + message + "\u0001");
+    }
+    
     private void priMsgProcessor (String rawMessage){
         
         Message message = new Message(rawMessage, this.nickname);
