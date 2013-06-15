@@ -463,6 +463,15 @@ public class Server extends Thread {
             // TODO: CTCP support
             System.out.println("CTCP Command detected");
             
+            context = context.trim();
+            
+            if (context.startsWith("ACTION") 
+                    && context.toLowerCase()
+                    .contains(this.nickname.toLowerCase())) {
+                
+                //handling action
+               
+            }
         } else {
             /* do nothing at the moment, but can impletemt some sort of
              * a listener 
