@@ -456,8 +456,13 @@ public class Server extends Thread {
             
             this.sendMessage(traget, response);
             
-        } else if (context.startsWith("CTCP")){
+            /* CTCP is a Private Message encapsulated with ASCII bit 0x01 ,
+             * which is \u0001 in Java.
+             */
+        } else if (context.startsWith("\u0001") && context.endsWith("\u0001")){
             // TODO: CTCP support
+            System.out.println("CTCP Command detected");
+            
         } else {
             /* do nothing at the moment, but can impletemt some sort of
              * a listener 
