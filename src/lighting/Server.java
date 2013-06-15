@@ -415,7 +415,7 @@ public class Server extends Thread {
     }
     
     public void sendAction (String traget, String message){
-        this.sendRaw("PRIVMSG "+ traget + " :\u0001ACTION" + message 
+        this.sendRaw("PRIVMSG "+ traget + " :\u0001ACTION " + message 
                 + "\u0001");
     }
     
@@ -483,7 +483,8 @@ public class Server extends Thread {
                     .contains(this.nickname.toLowerCase())) {
                 
                 //handling action
-               
+               response = "Purrs at " + message.getSender();
+               this.sendAction(traget, response);
             }
         } else {
             /* do nothing at the moment, but can impletemt some sort of
