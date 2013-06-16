@@ -434,12 +434,12 @@ public class Server extends Thread {
         String context = message.getContext();
         
         String response ="";
-        String traget = "";
+        String target = "";
         
         if (message.isPM()){
-            traget = message.getSender();
+            target = message.getSender();
         } else {
-            traget = message.getChannel();
+            target = message.getChannel();
             response = message.getSender() + ": ";
         }
         
@@ -467,7 +467,7 @@ public class Server extends Thread {
                                 
             }
             
-            this.sendMessage(traget, response);
+            this.sendMessage(target, response);
             
             /* CTCP is a Private Message encapsulated with ASCII bit 0x01 ,
              * which is \u0001 in Java.
@@ -484,7 +484,7 @@ public class Server extends Thread {
                 
                 //handling action
                response = "Purrs at " + message.getSender();
-               this.sendAction(traget, response);
+               this.sendAction(target, response);
             }
         } else {
             /* do nothing at the moment, but can impletemt some sort of
