@@ -59,7 +59,7 @@ public class CTCP {
                 break;
                 
             case "VERSION" :
-                response = "VERSION Lighting-catbot ALPHA";
+                response = "VERSION Lighting-catbot:ALPHA:Java 7";
                 break;
 
             default:
@@ -73,7 +73,7 @@ public class CTCP {
     /**
      * Handling CLIENTINFO request
      * @param parameters
-     * @return Available commands in case http://www.irchelp.org/irchelp/rfc/ctcpspec.htmlno parameters or command help
+     * @return Available commands in case no parameters or command help
      */
     private String clientInfo (String parameters){
         
