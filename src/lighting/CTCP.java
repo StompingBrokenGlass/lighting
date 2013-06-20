@@ -19,18 +19,24 @@ public class CTCP {
         int space = query.indexOf(" ");
         
         String command ;
-        String paramenters ;
+        String parameters = "";
         if (space < 0){
             command = query;
         } else {
             command = query.substring(0,space);
-            paramenters = query.substring(space+1);
+            parameters = query.substring(space+1);
         }
         
         switch (command){
+            
             case "VERSION" :
                 response = "VERSION Lighting-catbot ALPHA";
                 break;
+                
+            case "PING" :
+                response = "PING " + parameters;
+                break;
+                
             default:
                 // send an error message identifying an unknown command
                 response = "ERRMSG " + query + " :Unknown CTCP query";
