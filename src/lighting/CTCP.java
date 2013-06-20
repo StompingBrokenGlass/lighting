@@ -29,19 +29,45 @@ public class CTCP {
         
         switch (command){
             
-            case "VERSION" :
-                response = "VERSION Lighting-catbot ALPHA";
+            case "CLIENTINFO":
+                response = clientInfo(parameters);
                 break;
                 
             case "PING" :
                 response = "PING " + parameters;
                 break;
                 
+            case "VERSION" :
+                response = "VERSION Lighting-catbot ALPHA";
+                break;
+
             default:
                 // send an error message identifying an unknown command
                 response = "ERRMSG " + query + " :Unknown CTCP query";
         }
         
         return response;
+    }
+    
+    private String clientInfo (String parameters){
+        
+        String message = "CLIENTINFO :"; 
+        String commands = "CLIENTINFO,PING,VERSION";
+        
+        switch (parameters){
+            
+            case "":
+                // Default message
+                message += "I can support the follow commands (" + commands 
+                        + "), also you can request the help by"
+                        + " passing the command as an agrument";
+                break;
+                
+            default:
+                // respond with Error
+                message = "ERRMSG CLIENTINFO " + parameters 
+                        + " :Unknown CTCP query";
+        }
+        return message;
     }
 }
