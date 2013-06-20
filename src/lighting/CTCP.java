@@ -5,14 +5,19 @@
 package lighting;
 
 /**
- *
+ * CTCP protocol support according to 
+ * http://www.irchelp.org/irchelp/rfc/ctcpspec.html
  * @author StompingBrokenGlass <stompingbrokenglass@gmail.com>
  * @since 2013-06-20
  */
 public class CTCP {
     
     
-    
+    /**
+     * Main CTCP Processor
+     * @param query
+     * @return Response to CTCP command
+     */
     public String processCTCP(String query){
         
         String response = "";
@@ -49,6 +54,11 @@ public class CTCP {
         return response;
     }
     
+    /**
+     * Handling CLIENTINFO request
+     * @param parameters
+     * @return Available commands in case http://www.irchelp.org/irchelp/rfc/ctcpspec.htmlno parameters or command help
+     */
     private String clientInfo (String parameters){
         
         String message = "CLIENTINFO :"; 
