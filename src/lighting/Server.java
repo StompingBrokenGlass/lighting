@@ -38,6 +38,9 @@ public class Server extends Thread {
     /* Channels */
     private HashMap channels = new HashMap();
     
+    /* Other variables */
+    private CTCP ctcp = new CTCP();
+    
     Server () {
         // uses the local server
         this.hostname = "localhost";
@@ -488,7 +491,8 @@ public class Server extends Thread {
                
             } else {
                 // handle the rest of CTCP commadns over here
-                
+                response = ctcp.processCTCP(context);
+                this.sendCTCPResponse(message.getSender(), response);
             }
         } else {
             /* do nothing at the moment, but can impletemt some sort of
