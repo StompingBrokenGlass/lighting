@@ -40,6 +40,12 @@ public class CTCP {
             case "CLIENTINFO":
                 response = clientInfo(parameters);
                 break;
+            
+            case "FINGER" :
+                response = "FINGER :Please check my USERINFO instead"
+                        + ", because I don't have a realname and don't count"
+                        + " my idling time";
+                break;
                 
             case "PING" :
                 response = "PING " + parameters;
@@ -87,7 +93,7 @@ public class CTCP {
     private String clientInfo (String parameters){
         
         String message = "CLIENTINFO :"; 
-        String commands = "CLIENTINFO,PING,SOURCE,TIME,VERSION,USERINFO";
+        String commands = "CLIENTINFO,FINGER,PING,SOURCE,TIME,VERSION,USERINFO";
         
         switch (parameters){
             
