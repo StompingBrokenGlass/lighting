@@ -104,6 +104,31 @@ public class CTCP {
                         + " passing the command as an agrument";
                 break;
                 
+             case "FINGER" :
+                message = "Returns User real name and idling time";
+                break;
+                
+            case "PING" :
+                message ="Used to measure the time delay between clients on" 
+                        + " the IRC network";
+                break;
+            
+            case "SOURCE" :
+                message = "Returns the github link of the bot";
+                break;
+                
+            case "TIME" :
+                message = "Returns the bot's system time in human readable form";
+                break;
+                
+            case "VERSION" :
+                message = "Returns the bot's Version";
+                break;
+                
+            case "USERINFO" : 
+                message = "Returns the user info";
+                break;
+                
             default:
                 // respond with Error
                 message = "ERRMSG CLIENTINFO " + parameters 
