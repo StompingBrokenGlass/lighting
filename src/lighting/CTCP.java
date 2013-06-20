@@ -66,6 +66,10 @@ public class CTCP {
             case "VERSION" :
                 response = "VERSION Lighting-catbot:ALPHA:Java 7";
                 break;
+                
+            case "USERINFO" : 
+                response = "Meow? I'm a kitty cat bot (=^.^=)";
+                break;
 
             default:
                 // send an error message identifying an unknown command
@@ -83,7 +87,7 @@ public class CTCP {
     private String clientInfo (String parameters){
         
         String message = "CLIENTINFO :"; 
-        String commands = "CLIENTINFO,PING,SOURCE,TIME,VERSION";
+        String commands = "CLIENTINFO,PING,SOURCE,TIME,VERSION,USERINFO";
         
         switch (parameters){
             
