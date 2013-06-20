@@ -68,7 +68,7 @@ public class CTCP {
                 break;
                 
             case "USERINFO" : 
-                response = "Meow? I'm a kitty cat bot (=^.^=)";
+                response = "USERINFO :Meow? I'm a kitty cat bot (=^.^=)";
                 break;
 
             default:
