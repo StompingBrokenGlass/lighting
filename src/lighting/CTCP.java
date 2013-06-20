@@ -104,7 +104,12 @@ public class CTCP {
                         + " passing the command as an agrument";
                 break;
                 
-             case "FINGER" :
+            case "CLIENTINFO" :
+                message = "with 0 arguments gives a list of known client" 
+                        +" query keywords. With 1 argument, a description of" 
+                        +" the client query keyword is returned.";
+                break;
+            case "FINGER" :
                 message = "Returns User real name and idling time";
                 break;
                 
