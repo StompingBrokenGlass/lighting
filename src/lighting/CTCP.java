@@ -4,6 +4,9 @@
  */
 package lighting;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * CTCP protocol support according to 
  * http://www.irchelp.org/irchelp/rfc/ctcpspec.html
@@ -41,6 +44,19 @@ public class CTCP {
             case "PING" :
                 response = "PING " + parameters;
                 break;
+            
+            case "TIME" :
+                
+                SimpleDateFormat dateFormat = 
+                        new SimpleDateFormat(
+                        "EEE yyyy-MM-dd hh:mm:ss z '(UTC'Z')'");
+                
+                String time = dateFormat.format(
+                        Calendar.getInstance().getTime());
+                
+                response = "TIME :" + time ;
+                
+                break;
                 
             case "VERSION" :
                 response = "VERSION Lighting-catbot ALPHA";
@@ -62,7 +78,7 @@ public class CTCP {
     private String clientInfo (String parameters){
         
         String message = "CLIENTINFO :"; 
-        String commands = "CLIENTINFO,PING,VERSION";
+        String commands = "CLIENTINFO,PING,TIME,VERSION";
         
         switch (parameters){
             
