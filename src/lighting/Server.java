@@ -482,9 +482,13 @@ public class Server extends Thread {
                     && context.toLowerCase()
                     .contains(this.nickname.toLowerCase())) {
                 
-                //handling action
+                //handling behavior based on action
                response = "Purrs at " + message.getSender();
                this.sendAction(target, response);
+               
+            } else {
+                // handle the rest of CTCP commadns over here
+                
             }
         } else {
             /* do nothing at the moment, but can impletemt some sort of
