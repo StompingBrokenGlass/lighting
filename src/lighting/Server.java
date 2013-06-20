@@ -406,25 +406,25 @@ public class Server extends Thread {
         this.sendRaw("JOIN " + channel);
     }
     
-    public void sendMessage (String traget, String message){
-        this.sendRaw("PRIVMSG "+ traget + " :" + message);
+    public void sendMessage (String target, String message){
+        this.sendRaw("PRIVMSG "+ target + " :" + message);
     }
     
-    public void sendNotice (String traget, String message){
-        this.sendRaw("NOTICE " + traget + " :" + message);
+    public void sendNotice (String target, String message){
+        this.sendRaw("NOTICE " + target + " :" + message);
     }
     
-    public void sendAction (String traget, String message){
-        this.sendRaw("PRIVMSG "+ traget + " :\u0001ACTION " + message 
+    public void sendAction (String target, String message){
+        this.sendRaw("PRIVMSG "+ target + " :\u0001ACTION " + message 
                 + "\u0001");
     }
     
-    public void sendCTCPRequest (String traget, String message){
-        this.sendRaw("PRIVMSG "+ traget + " :\u0001" + message + "\u0001");
+    public void sendCTCPRequest (String target, String message){
+        this.sendRaw("PRIVMSG "+ target + " :\u0001" + message + "\u0001");
     }
     
-    public void sendCTCPResponse (String traget, String message){
-        this.sendRaw("NOTICE " + traget + " :\u0001" + message + "\u0001");
+    public void sendCTCPResponse (String target, String message){
+        this.sendRaw("NOTICE " + target + " :\u0001" + message + "\u0001");
     }
     
     private void priMsgProcessor (String rawMessage){
