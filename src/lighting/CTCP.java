@@ -45,6 +45,11 @@ public class CTCP {
                 response = "PING " + parameters;
                 break;
             
+            case "SOURCE" :
+                 response = "SOURCE" 
+                         + " https://github.com/StompingBrokenGlass/lighting";
+                 break;
+                
             case "TIME" :
                 
                 SimpleDateFormat dateFormat = 
@@ -78,7 +83,7 @@ public class CTCP {
     private String clientInfo (String parameters){
         
         String message = "CLIENTINFO :"; 
-        String commands = "CLIENTINFO,PING,TIME,VERSION";
+        String commands = "CLIENTINFO,PING,SOURCE,TIME,VERSION";
         
         switch (parameters){
             
